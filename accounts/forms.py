@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 from .models import UserProfile
 
+
 class UserProfileForm(forms.ModelForm):
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
@@ -25,3 +26,4 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         exclude = ['user']
         field_order = ['first_name', 'last_name', 'date_of_birth']
+        widgets = {'date_of_birth': forms.DateInput(attrs={'type': 'date'})}
