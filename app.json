@@ -8,7 +8,7 @@
   "env": {
     "SECRET_KEY": {
       "description": "The secret key for the Django application.",
-      "generator": "secret"
+      "generator": "!1e9abwj_#v%k%3=jpb8_-2=f9&=tlprflj*&)b1+bn8t0h2x&"
     }
   },
   "environments": {
