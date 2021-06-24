@@ -1,20 +1,14 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
-from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    date_of_birth = models.DateField(null=True, blank=True)
+class User(AbstractUser):
+    full_name = models.CharField(max_length=50)
+    mobile_number = models.CharField(max_length=20, unique=True)
+    birth_date = models.DateField(null=True, blank=True)
+    bio = models.TextField(max_length=500, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-
-@receiver(post_save, sender=User)
-def update_user_profile(sender, instance, created, **kwargs):
-    user = instance
-    if created:
-        profile = UserProfile(user=user)
-        profile.save()
+    def save(self, *args, **kwargs):
+        self.full_name = f'{self.first_name} {self.last_name}'
+        super().save(*args, **kwargs)
