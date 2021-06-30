@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from pytz import timezone
 
 
 class User(AbstractUser):
@@ -17,3 +16,6 @@ class Log(models.Model):
     msg = models.CharField(max_length=100)
     timezone = models.CharField(max_length=50)
     created_at = models.DateTimeField()
+
+    def __str__(self):
+        return f'{self.msg} - {self.created_at} {self.timezone}'
