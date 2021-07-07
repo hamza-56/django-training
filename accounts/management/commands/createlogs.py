@@ -1,19 +1,9 @@
-import random
-import string
 from datetime import datetime
 
-import pytz
 from django.core.management.base import BaseCommand
-from pytz import all_timezones_set, timezone
+from django.utils.crypto import get_random_string
 
 from accounts.models import Log
-
-
-def get_random_string(length):
-    # choose from all lowercase letter
-    letters = string.ascii_lowercase
-    result = ''.join(random.choice(letters) for i in range(length))
-    return result
 
 
 class Command(BaseCommand):
@@ -24,9 +14,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for i in range(options['count']):
-            msg = get_random_string(20)
+            msg = get_random_string(length=20)
             PST = 'Asia/Karachi'
-            created_at = datetime.now(timezone(PST))
+            created_at = datetime.now()
             Log.objects.create(msg=msg, timezone=PST, created_at=created_at)
             self.stdout.write(
                 self.style.SUCCESS(
