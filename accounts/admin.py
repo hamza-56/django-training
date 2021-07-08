@@ -14,3 +14,4 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(Log)
 class LogAdmin(admin.ModelAdmin):
     list_display = ('msg', 'timezone')
+    list_filter = ('timezone', )

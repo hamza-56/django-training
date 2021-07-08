@@ -1,7 +1,7 @@
 import pytz
 from rest_framework import serializers
 
-from accounts.models import Log
+from .models import Log
 
 
 class LogSerializer(serializers.HyperlinkedModelSerializer):
