@@ -40,8 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # third party
+    'rest_framework',
+
     # project apps
-    'accounts'
+    'accounts',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -121,7 +125,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False    # Don't want django to convert dates in utc before storing
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

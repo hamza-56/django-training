@@ -15,8 +15,6 @@ class ProfileUpdateForm(UserChangeForm):
 
     class Meta(UserChangeForm):
         model = User
-        fields = ('first_name', 'last_name', 'mobile_number', 'birth_date',
-                  'bio')
-        fields_order = ('first_name', 'last_name', 'mobile_number',
-                        'birth_date', 'bio')
+        fields = ('first_name', 'last_name', 'birth_date', 'bio')
+        fields_order = ('first_name', 'last_name', 'birth_date', 'bio')
         widgets = {'birth_date': forms.DateInput(attrs={'type': 'date'})}
