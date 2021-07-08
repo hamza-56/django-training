@@ -1,4 +1,4 @@
-from rest_framework import permissions, viewsets
+from rest_framework import authentication, permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -7,6 +7,8 @@ from accounts.serializers import LogSerializer
 
 
 class LogViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [authentication.TokenAuthentication]
     queryset = Log.objects.all()
     serializer_class = LogSerializer
 
@@ -19,6 +21,7 @@ class ListUsers(APIView):
     * Only admin users are able to access this view.
     """
     permission_classes = [permissions.IsAdminUser]
+    authentication_classes = [authentication.TokenAuthentication]
 
     def get(self, request, format=None):
         """
