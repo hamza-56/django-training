@@ -72,7 +72,7 @@ class Command(BaseCommand):
 
     def convert_logs_utc_to_tz(self, n):
         self.log_info('in convert_logs_utc_to_tz')
-        logs = Log.objects.filter(timezone='UTC')[:n]
+        logs = Log.objects.utc()[:n]
 
         if logs:
             for log in logs:
