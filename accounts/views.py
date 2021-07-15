@@ -1,10 +1,8 @@
-from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic.edit import CreateView
 
 from .forms import ProfileUpdateForm, RegisterForm
-from .models import User
 
 
 class SignUpView(CreateView):

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "58f6c9ca-fcb9-4a12-ab13-50ef276f12e3",
+		"_postman_id": "f9ab4460-fe5f-4b57-add6-ffc2ba1c42db",
 		"name": "Edly Training",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -18,7 +18,7 @@
 							"formdata": [
 								{
 									"key": "username",
-									"value": "root",
+									"value": "test-register-api",
 									"type": "text"
 								},
 								{
@@ -29,13 +29,49 @@
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}/api/token-auth/",
+							"raw": "{{base_url}}/api/auth/login/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
-								"token-auth",
+								"auth",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "test-register-api",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "secret123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register",
 								""
 							]
 						}
@@ -82,6 +118,65 @@
 										"api",
 										"logs",
 										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Log",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "msg",
+											"value": "Wed Jun 14 log ",
+											"type": "text"
+										},
+										{
+											"key": "timezone",
+											"value": "UTC",
+											"type": "text"
+										},
+										{
+											"key": "created_at",
+											"value": "2021-06-25T10:40:23.789962",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/logs/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"logs",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Log",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/logs/1/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"logs",
+										"1",
+										""
 									]
 								}
 							},
@@ -265,6 +360,76 @@
 										"api",
 										"todos",
 										"1",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Profile",
+					"item": [
+						{
+							"name": "Get User Profile",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/profile/4/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"profile",
+										"4",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User Profile",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "first_name",
+											"value": "FIRST NAME",
+											"type": "text"
+										},
+										{
+											"key": "last_name",
+											"value": "LAST NAME",
+											"type": "text"
+										},
+										{
+											"key": "birth_date",
+											"value": "2015-07-27",
+											"type": "text"
+										},
+										{
+											"key": "bio",
+											"value": "BIO BIO",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/profile/103/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"profile",
+										"103",
 										""
 									]
 								}
