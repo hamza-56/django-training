@@ -9,7 +9,7 @@ class LogSerializer(serializers.HyperlinkedModelSerializer):
         fields = '__all__'
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserCreateSerializer(serializers.ModelSerializer):
 
     password = serializers.CharField(write_only=True)
 

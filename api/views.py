@@ -1,14 +1,15 @@
-from django.db.models.query import QuerySet
 from rest_framework import authentication, mixins, permissions, viewsets
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.models import Log, User
-from accounts.serializers import (LogSerializer, UserProfileSerializer,
-                                  UserSerializer)
+from accounts.serializers import (LogSerializer, UserCreateSerializer,
+                                  UserProfileSerializer)
 from todolist.models import TodoListItem
 from todolist.serialzers import TodoListItemSerializer
+
+from .permissions import UserIsOwnerOrReadOnly
 
 
 class LogViewSet(viewsets.ModelViewSet):
@@ -32,8 +33,11 @@ class ListUsers(APIView):
         '''
         Return a list of all users.
         '''
-        usernames = [user.username for user in User.objects.all()]
-        return Response(usernames)
+        users = [
+            user._asdict() for user in User.objects.values_list(
+                'username', 'email', 'full_name', named=True)
+        ]
+        return Response(users)
 
 
 class TodoListViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin,
@@ -55,14 +59,7 @@ class TodoListViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin,
 
 class RegisterView(CreateAPIView):
     model = User
-    serializer_class = UserSerializer
-
-
-class UserIsOwnerOrReadOnly(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        if request.method in permissions.SAFE_METHODS:
-            return True
-        return obj.id == request.user.id
+    serializer_class = UserCreateSerializer
 
 
 class UserProfileRetrieveUpdateAPIView(RetrieveUpdateAPIView):
