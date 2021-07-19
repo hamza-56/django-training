@@ -27,7 +27,7 @@ class UserTestCase(TestCase):
 
 
 class UserProfileTest(APITestCase):
-    def test_create_account(self):
+    def test_register_user(self):
         url = '/api/auth/register/'
         data = {'username': 'user-from-api', 'password': 'secret123'}
         response = self.client.post(url, data, format='json')
