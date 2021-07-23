@@ -54,28 +54,25 @@ class UserProfileTest(APITestCase):
     def test_update_profile(self):
         username = 'user-test-api'
         password = 'secret123'
-        first_name = 'first_name'
-        last_name = 'last_name'
-        birth_date = '2020-07-27'
-        bio = 'bio bio bio'
-
+        profile_data = {
+            'first_name': 'first_name',
+            'last_name': 'last_name',
+            'birth_date': '2020-07-27',
+            'bio': 'bio bio bio',
+        }
         user = User.objects.create_user(username=username, password=password)
         token = self.get_access_token(username=username, password=password)
         self.client.credentials(HTTP_AUTHORIZATION=f'Token {token}')
 
         url = f'/api/profile/{user.id}/'
-        data = {
-            'first_name': first_name,
-            'last_name': last_name,
-            'birth_date': birth_date,
-            'bio': bio
-        }
-        response = self.client.put(url, data, format='json')
+        response = self.client.put(url, profile_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        response = self.client.get(url, data, format='json')
+        response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['first_name'], first_name)
-        self.assertEqual(response.data['last_name'], last_name)
-        self.assertEqual(response.data['birth_date'], birth_date)
-        self.assertEqual(response.data['bio'], bio)
+        self.assertEqual(response.data['first_name'],
+                         profile_data['first_name'])
+        self.assertEqual(response.data['last_name'], profile_data['last_name'])
+        self.assertEqual(response.data['birth_date'],
+                         profile_data['birth_date'])
+        self.assertEqual(response.data['bio'], profile_data['bio'])
