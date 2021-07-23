@@ -22,8 +22,10 @@ class UserTestCase(TestCase):
         '''
         user_1 = User.objects.get(username='user-test-1')
         user_2 = User.objects.get(username='user-test-2')
-        self.assertEqual(user_1.full_name, 'user-1-first user-1-last')
-        self.assertEqual(user_2.full_name, 'user-2-first user-2-last')
+        self.assertEqual(user_1.full_name,
+                         f'{user_1.first_name} {user_1.last_name}')
+        self.assertEqual(user_2.full_name,
+                         f'{user_2.first_name} {user_2.last_name}')
 
 
 class UserProfileTest(APITestCase):
