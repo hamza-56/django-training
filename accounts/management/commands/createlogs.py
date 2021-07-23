@@ -13,12 +13,17 @@ class Command(BaseCommand):
         parser.add_argument('count', type=int)
 
     def handle(self, *args, **options):
-        for i in range(options['count']):
-            msg = get_random_string(length=20)
-            PST = 'Asia/Karachi'
-            created_at = datetime.now()
-            Log.objects.create(msg=msg, timezone=PST, created_at=created_at)
+        n = options['count']
+        PST = 'Asia/Karachi'
+        logs = [
+            Log(msg=get_random_string(length=20),
+                timezone=PST,
+                created_at=datetime.now()) for _ in range(n)
+        ]
+        Log.objects.bulk_create(logs)
+
+        for log in logs:
             self.stdout.write(
                 self.style.SUCCESS(
-                    f'Successfully created {i + 1} log with msg {msg}, timezone: {PST}, created_at: {created_at}'
+                    f'Successfully created log with msg {log.msg}, timezone: {log.timezone}, created_at: {log.created_at}'
                 ))
