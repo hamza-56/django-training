@@ -2,6 +2,8 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from todolist.models import TodoListItem
+
 from .models import User
 
 
@@ -57,6 +59,28 @@ class ApiTest(APITestCase):
         password = 'secret123'
         User.objects.create_user(username=username, password=password)
         self.get_access_token(username=username, password=password)
+
+    def test_create_todo_without_login(self):
+        data = {'title': 'title', 'due_date': '2021-07-27'}
+        url = '/api/todos/'
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(TodoListItem.objects.count(), 0)
+
+    def test_create_todo_with_login(self):
+        username = 'user-test-api'
+        password = 'secret123'
+        user = User.objects.create_user(username=username, password=password)
+
+        data = {'title': 'title', 'due_date': '2021-07-27'}
+        url = '/api/todos/'
+
+        token = self.get_access_token(username=username, password=password)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Token {token}')
+
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(TodoListItem.objects.count(), 1)
 
     def test_user_can_update_own_profile(self):
         username = 'user-test-api'
