@@ -64,6 +64,5 @@ class UserProfileRetrieveUpdateAPIView(RetrieveUpdateAPIView):
         permissions.IsAuthenticated,
         UserIsOwnerOrReadOnly,
     )
-    authentication_classes = [authentication.TokenAuthentication]
     serializer_class = UserProfileSerializer
     queryset = User.objects.all()
