@@ -14,7 +14,6 @@ from .permissions import UserIsOwnerOrReadOnly
 
 class LogViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated, )
-    authentication_classes = (authentication.TokenAuthentication, )
     queryset = Log.objects.all()
     serializer_class = LogSerializer
 
@@ -27,7 +26,6 @@ class ListUsers(APIView):
     * Only admin users are able to access this view.
     '''
     permission_classes = (permissions.IsAdminUser, )
-    authentication_classes = (authentication.TokenAuthentication, )
 
     def get(self, request, format=None):
         '''
@@ -45,7 +43,6 @@ class TodoListViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin,
                       mixins.ListModelMixin, viewsets.GenericViewSet):
 
     permission_classes = (permissions.IsAuthenticated, )
-    authentication_classes = (authentication.TokenAuthentication, )
     serializer_class = TodoListItemSerializer
 
     def get_queryset(self):
