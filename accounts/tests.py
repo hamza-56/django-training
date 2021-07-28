@@ -47,12 +47,13 @@ class ApiTest(APITestCase):
         self.assertEqual(User.objects.count(), 0)
 
     def get_access_token(self, username=None, password=None):
-        url = '/api/auth/login/'
+        url = '/api/token/'
         data = {'username': username, 'password': password}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertTrue('token' in response.data)
-        return response.data['token']
+        self.assertTrue('access' in response.data)
+        self.assertTrue('refresh' in response.data)
+        return response.data['access']
 
     def test_get_auth_token(self):
         username = 'user-test-api'
@@ -64,7 +65,7 @@ class ApiTest(APITestCase):
         data = {'title': 'title', 'due_date': '2021-07-27'}
         url = '/api/todos/'
         response = self.client.post(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEqual(TodoListItem.objects.count(), 0)
 
     def test_create_todo_with_login(self):
@@ -76,7 +77,7 @@ class ApiTest(APITestCase):
         url = '/api/todos/'
 
         token = self.get_access_token(username=username, password=password)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Token {token}')
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
 
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -93,7 +94,7 @@ class ApiTest(APITestCase):
         }
         user = User.objects.create_user(username=username, password=password)
         token = self.get_access_token(username=username, password=password)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Token {token}')
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
 
         url = f'/api/profile/{user.id}/'
         response = self.client.put(url, profile_data, format='json')
@@ -123,7 +124,7 @@ class ApiTest(APITestCase):
         User.objects.create_user(username=username2, password=password)
 
         token = self.get_access_token(username=username2, password=password)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Token {token}')
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
 
         url = f'/api/profile/{user1.id}/'
         response = self.client.put(url, profile_data, format='json')
