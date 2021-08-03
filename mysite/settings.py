@@ -134,8 +134,6 @@ SOCIALACCOUNT_PROVIDERS = {
     },
 }
 
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
