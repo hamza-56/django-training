@@ -33,7 +33,7 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{% url 'get_or_update_profile' %}">Profile</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+            <a class="dropdown-item" href="{% url 'account_logout' %}">Log Out</a>
           </div>
         </li>
         {% else %}
@@ -41,7 +41,7 @@
           <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'login' %}">Log In</a>
+          <a class="nav-link" href="{% url 'account_login' %}">Log In</a>
         </li>
         {% endif %}
       </ul>
