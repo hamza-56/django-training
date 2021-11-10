@@ -2,10 +2,12 @@
 
 {% block title %}Register{% endblock %}
 
+{% load static %}
+
 {% block content %}
 
 <div class="d-flex align-items-center justify-content-center">
-  <form method="post">
+  <form id="id_register_form" method="post">
     {% csrf_token %}
     {% for field in form %}
       <p>
@@ -29,4 +31,8 @@
   </form>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/register.js' %}"></script>
 {% endblock %}
